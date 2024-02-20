@@ -1,5 +1,7 @@
 package com.devstaff.exam.farmcollector.service;
 
+import com.devstaff.exam.farmcollector.dto.HarvestDTO;
+import com.devstaff.exam.farmcollector.dto.HarvestedResponseDTO;
 import com.devstaff.exam.farmcollector.dto.PlantingRequestDTO;
 import com.devstaff.exam.farmcollector.dto.PlantingResponseDTO;
 import com.devstaff.exam.farmcollector.entities.Crop;
@@ -13,7 +15,12 @@ import com.devstaff.exam.farmcollector.repository.FarmerRepository;
 import com.devstaff.exam.farmcollector.repository.PlantingRepository;
 import com.devstaff.exam.farmcollector.repository.SeasonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PlantingService {
@@ -72,5 +79,44 @@ public class PlantingService {
 
 
         return planting.plantingResponseDTO();
+    }
+
+    public HarvestedResponseDTO getHarvestedForSeason(String season) {
+        List<Planting> plantingList = plantingRepository.findAll();
+
+        List<HarvestDTO> harvestDTOList = plantingList.stream().filter(p-> p.getSeason().getName().equals(season)).map(p-> new HarvestDTO(
+                p.getCrop().getName(),
+                p.getFarm().getName(),
+                p.getFarmer().getName(),
+                p.getSeason().getName(),
+                p.getFarm().getActualAmountHarvested())).collect(Collectors.toList());
+
+        return new HarvestedResponseDTO(harvestDTOList);
+    }
+
+    public HarvestedResponseDTO getHarvestedForFarm(String farm) {
+        List<Planting> plantingList = plantingRepository.findAll();
+
+        List<HarvestDTO> harvestDTOList = plantingList.stream().filter(p-> p.getFarm().getName().equals(farm)).map(p-> new HarvestDTO(
+                p.getCrop().getName(),
+                p.getFarm().getName(),
+                p.getFarmer().getName(),
+                p.getSeason().getName(),
+                p.getFarm().getActualAmountHarvested())).collect(Collectors.toList());
+
+        return new HarvestedResponseDTO(harvestDTOList);
+    }
+
+    public HarvestedResponseDTO getSeasonReport() {
+        List<Planting> plantingList = plantingRepository.findAll();
+
+        List<HarvestDTO> harvestDTOList = plantingList.stream().map(p-> new HarvestDTO(
+                p.getCrop().getName(),
+                p.getFarm().getName(),
+                p.getFarmer().getName(),
+                p.getSeason().getName(),
+                p.getFarm().getActualAmountHarvested())).collect(Collectors.toList());
+
+        return new HarvestedResponseDTO(harvestDTOList);
     }
 }
