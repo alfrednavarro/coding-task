@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FarmCollectorApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FarmCollectorApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FarmCollectorApplication.class, args);
+    }
 
 }
