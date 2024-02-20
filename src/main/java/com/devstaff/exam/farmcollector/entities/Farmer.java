@@ -1,6 +1,5 @@
 package com.devstaff.exam.farmcollector.entities;
 
-import com.devstaff.exam.farmcollector.dto.FarmDTO;
 import com.devstaff.exam.farmcollector.dto.FarmerDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +17,7 @@ public class Farmer {
     private String name;
 
     public FarmerDTO farmerDTO() {
-        return new FarmerDTO (
+        return new FarmerDTO(
                 farmerId,
                 name);
     }

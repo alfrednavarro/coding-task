@@ -18,9 +18,9 @@ public class Season {
     private String name;
 
     public SeasonDTO seasonDTO() {
-        return new SeasonDTO (
-                    seasonId,
-                    name
+        return new SeasonDTO(
+                seasonId,
+                name
         );
     }
 }

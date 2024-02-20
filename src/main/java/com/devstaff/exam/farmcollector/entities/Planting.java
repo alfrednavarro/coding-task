@@ -34,7 +34,7 @@ public class Planting {
     Season season;
 
     public PlantingResponseDTO plantingResponseDTO() {
-        return new PlantingResponseDTO (
+        return new PlantingResponseDTO(
                 plantingId,
                 farmer.farmerDTO(),
                 crop.cropDTO(),
